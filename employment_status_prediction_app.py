@@ -8,43 +8,42 @@ from streamlit_option_menu import option_menu
 # ------------------------------------------------
 # PAGE CONFIGURATION
 # ------------------------------------------------
-st.set_page_config(page_title="Employment Status Classifier", layout="wide")
+st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 
 # ------------------------------------------------
-# CUSTOM STYLING (New Theme)
+# CUSTOM STYLING (Modern & Professional Look)
 # ------------------------------------------------
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            background-color: #F0F4EF !important;
+            background-color: #f0f2f6 !important;
         }
         html, body, [data-testid="stAppViewContainer"] > .main {
-            background-color: #FBFBFB !important;
-            color: #222222 !important;
+            background-color: #ffffff !important;
+            color: #1e1e1e !important;
         }
         .stSelectbox > div,
         .stSelectbox div[data-baseweb="select"] > div,
         input[type="number"] {
-            background-color: #F9F9F9 !important;
-            border-radius: 6px;
-            border: 1px solid #CED4DA;
-            padding: 0.3rem;
+            background-color: #f7f9fc !important;
+            border-radius: 10px;
+            padding: 0.5rem;
+            font-size: 16px;
         }
         div[data-baseweb="slider"] [role="slider"] {
-            background-color: #006666 !important;
-        }
-        div[data-baseweb="slider"] > div > div > div:nth-child(2) {
-            background: #006666 !important;
+            background-color: #004080 !important;
         }
         div.stButton > button {
-            background-color: #006666 !important;
+            background-color: #004080 !important;
             color: white !important;
-            border-radius: 6px !important;
+            border-radius: 8px !important;
+            height: 3em;
+            width: 100%;
+            font-size: 16px;
             border: none;
-            padding: 0.5rem 1.2rem;
         }
         div.stButton > button:hover {
-            background-color: #004C4C !important;
+            background-color: #002b59 !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -61,23 +60,23 @@ X_columns = joblib.load("X_columns.pkl")
 # ------------------------------------------------
 with st.sidebar:
     selected = option_menu(
-        menu_title="Navigation",
+        menu_title="",
         options=["Home", "Predictor", "About"],
-        icons=["house-door-fill", "cpu-fill", "info-square-fill"],
+        icons=["house", "bar-chart", "info-circle"],
         default_index=1,
         orientation="vertical",
         styles={
-            "container": {"padding": "0!important", "background-color": "#F0F4EF"},
-            "icon": {"color": "#006666", "font-size": "18px"},
+            "container": {"padding": "0!important", "background-color": "#f0f2f6"},
+            "icon": {"color": "#004080", "font-size": "20px"},
             "nav-link": {
-                "font-size": "15px",
+                "font-size": "16px",
                 "text-align": "left",
                 "margin": "0px",
-                "--hover-color": "#D9F2EF",
-                "color": "#333333"
+                "--hover-color": "#cbd9ec",
+                "color": "#1e1e1e"
             },
             "nav-link-selected": {
-                "background-color": "#B2DFDB",
+                "background-color": "#cbd9ec",
                 "color": "#000000"
             },
         },
@@ -87,20 +86,24 @@ with st.sidebar:
 # HOME TAB
 # ------------------------------------------------
 if selected == "Home":
-    st.title("🏡 Employment Status Prediction System")
-    st.write("Welcome! Use the sidebar to navigate and explore employment prediction based on educational and socio-economic features.")
+    st.title("🏠 Welcome to the Employment Status Predictor")
+    st.write("Use the navigation on the left to explore the app and predict employment status.")
 
 # ------------------------------------------------
 # PREDICTOR TAB
 # ------------------------------------------------
 elif selected == "Predictor":
-    st.title("🔍 Employment Status Predictor")
-    st.write("Provide individual data below to predict employment classification.")
+    st.title("🤖 Employment Status Prediction")
+    st.markdown("""
+    Provide the relevant details below. The model will analyze your inputs and predict whether the individual is likely to be **Employed** or **Unemployed**.
+    """)
 
     input_dict = {}
     for col in X_columns:
         if col in ['Matric', 'Degree', 'Diploma']:
             input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
+        elif col == 'Round':
+            input_dict[col] = st.selectbox(col, ['1','2','3','4'])
         elif col == 'Sa_citizen':
             input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
         elif col == 'Gender':
@@ -108,42 +111,40 @@ elif selected == "Predictor":
         elif col == 'Highest_Education':
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
         elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography']:
-            input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%', '80% - 100%'])
+            input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
         elif col == 'Province':
-            input_dict[col] = st.selectbox(col, [
-                'Gauteng', 'Mpumalanga', 'North West', 'Free State',
-                'Eastern Cape', 'Limpopo', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'])
+            input_dict[col] = st.selectbox(col, ['Gauteng' , 'Mpumalanga' , 'North West', 'Free State', 'Eastern Cape', 'Limpopo','KwaZulu-Natal','Northern Cape','Western Cape'])
         elif col == 'Status':
-            input_dict[col] = st.selectbox(col, [
-                'Unemployed', 'Studying', 'Wage employed', 'Self employed',
-                'Wage and self employed', 'Employment program', 'Other'])
+            input_dict[col] = st.selectbox(col, ['Unemployed', 'Studying','Wage employed','Self employed','Wage and self employed','Employment program','Other'])
         else:
             input_dict[col] = st.number_input(col, value=0)
 
     input_df = pd.DataFrame([input_dict])
 
+    # Encode categoricals
     for col in input_df.select_dtypes(include='object').columns:
         le = LabelEncoder()
         input_df[col] = le.fit(input_df[col]).transform(input_df[col])
 
+    # Scale numeric
     input_df_scaled = scaler.transform(input_df)
 
     if st.button("Predict Employment Status"):
         pred = model.predict(input_df_scaled)[0]
         prob = model.predict_proba(input_df_scaled)[0][int(pred)]
         status = 'Unemployed' if pred == 1 else 'Employed'
-        st.success(f"🧾 Prediction: {status}")
-        st.info(f"Confidence Level: {prob * 100:.2f}%")
+        st.success(f"Prediction: *{status}*")
+        st.info(f"Confidence: *{prob * 100:.2f}%*")
 
 # ------------------------------------------------
 # ABOUT TAB
 # ------------------------------------------------
 elif selected == "About":
-    st.title("📘 About the App")
+    st.title("ℹ About This App")
     st.markdown("""
-        This application predicts the employment status of individuals using a Logistic Regression model
-        trained on educational and demographic attributes.
+        This app predicts whether a person is employed or unemployed based on various demographic and academic factors.
 
-        *Team:* Group Five  
-        *Built with:* Python, Streamlit, scikit-learn
-    """)
+        - **Built by:** Group Five Team  
+        - **Model Used:** Logistic Regression  
+        - **Technologies:** Python, Streamlit, Scikit-learn  
+    """)
