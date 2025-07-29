@@ -116,7 +116,7 @@ elif selected == "Predictor":
         elif col == 'Highest_Education':
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
         elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography', 'Province', 'Status']:
-            input_dict[col] = st.selectbox(col, ['Unknown', 'Yes', 'No'])
+            input_dict[col] = st.selectbox(col, ['Yes', 'No'])
         else:
             input_dict[col] = st.number_input(col, value=0.0)
 
