@@ -109,6 +109,8 @@ elif selected == "Predictor":
     for col in X_columns:
         if col in ['Matric', 'Degree', 'Diploma']:
             input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
+        elif col in ['Round']:
+            input_dict[col] = st.selectbox(col, ['1','2','3','4'])
         elif col == 'Sa_citizen':
             input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
         elif col == 'Gender':
