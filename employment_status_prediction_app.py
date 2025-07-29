@@ -118,7 +118,7 @@ elif selected == "Predictor":
         elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography', 'Province', 'Status']:
             input_dict[col] = st.selectbox(col, ['Yes', 'No'])
         else:
-            input_dict[col] = st.number_input(col, value=0.0)
+            input_dict[col] = st.number_input(col, value=0)
 
     # Convert to DataFrame
     input_df = pd.DataFrame([input_dict])
