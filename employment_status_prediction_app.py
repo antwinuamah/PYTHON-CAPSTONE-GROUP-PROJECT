@@ -11,39 +11,47 @@ from streamlit_option_menu import option_menu
 st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 
 # ------------------------------------------------
-# CUSTOM STYLING (Modern & Professional Look)
+# CUSTOM STYLING
 # ------------------------------------------------
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            background-color: #f0f2f6 !important;
+            background-color: #E3E7F7 !important;
         }
         html, body, [data-testid="stAppViewContainer"] > .main {
-            background-color: #ffffff !important;
-            color: #1e1e1e !important;
+            background-color: white !important;
+            color: black !important;
         }
         .stSelectbox > div,
-        .stSelectbox div[data-baseweb="select"] > div,
+        .stSelectbox div[data-baseweb="select"] > div {
+            background-color: #E3E7F7 !important;
+            border-radius: 8px;
+        }
         input[type="number"] {
-            background-color: #f7f9fc !important;
-            border-radius: 10px;
-            padding: 0.5rem;
-            font-size: 16px;
+            background-color: #E3E7F7 !important;
+            border-radius: 8px;
+            padding: 0.4rem;
+        }
+        div[data-baseweb="slider"] > div > div > div:nth-child(2) {
+            background: #4B0082 !important;
+        }
+        div[data-baseweb="slider"] > div > div > div:nth-child(3) {
+            background: #e6e6e6 !important;
         }
         div[data-baseweb="slider"] [role="slider"] {
-            background-color: #004080 !important;
+            background-color: #4B0082 !important;
         }
         div.stButton > button {
-            background-color: #004080 !important;
+            background-color: #4B0082 !important;
             color: white !important;
             border-radius: 8px !important;
             height: 3em;
-            width: 100%;
-            font-size: 16px;
+            width: auto;
+            padding: 0.6rem 1.5rem;
             border: none;
         }
         div.stButton > button:hover {
-            background-color: #002b59 !important;
+            background-color: #3a006b !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -60,23 +68,23 @@ X_columns = joblib.load("X_columns.pkl")
 # ------------------------------------------------
 with st.sidebar:
     selected = option_menu(
-        menu_title="",
+        menu_title=None,
         options=["Home", "Predictor", "About"],
         icons=["house", "bar-chart", "info-circle"],
         default_index=1,
         orientation="vertical",
         styles={
-            "container": {"padding": "0!important", "background-color": "#f0f2f6"},
-            "icon": {"color": "#004080", "font-size": "20px"},
+            "container": {"padding": "0!important", "background-color": "#E3E7F7"},
+            "icon": {"color": "#4B0082", "font-size": "20px"},
             "nav-link": {
                 "font-size": "16px",
                 "text-align": "left",
                 "margin": "0px",
-                "--hover-color": "#cbd9ec",
-                "color": "#1e1e1e"
+                "--hover-color": "#D5D9F0",
+                "color": "#333333"
             },
             "nav-link-selected": {
-                "background-color": "#cbd9ec",
+                "background-color": "#C2C7EA",
                 "color": "#000000"
             },
         },
@@ -94,15 +102,14 @@ if selected == "Home":
 # ------------------------------------------------
 elif selected == "Predictor":
     st.title("🤖 Employment Status Prediction")
-    st.markdown("""
-    Provide the relevant details below. The model will analyze your inputs and predict whether the individual is likely to be **Employed** or **Unemployed**.
-    """)
+    st.write("Fill in the details below to predict employment status.")
 
+    # Dynamic input form based on training columns
     input_dict = {}
     for col in X_columns:
         if col in ['Matric', 'Degree', 'Diploma']:
             input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
-        elif col == 'Round':
+        elif col in ['Round']:
             input_dict[col] = st.selectbox(col, ['1','2','3','4'])
         elif col == 'Sa_citizen':
             input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
@@ -112,13 +119,14 @@ elif selected == "Predictor":
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
         elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography']:
             input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
-        elif col == 'Province':
+        elif col in ['Province']:
             input_dict[col] = st.selectbox(col, ['Gauteng' , 'Mpumalanga' , 'North West', 'Free State', 'Eastern Cape', 'Limpopo','KwaZulu-Natal','Northern Cape','Western Cape'])
-        elif col == 'Status':
+        elif col in ['Status']:
             input_dict[col] = st.selectbox(col, ['Unemployed', 'Studying','Wage employed','Self employed','Wage and self employed','Employment program','Other'])
         else:
             input_dict[col] = st.number_input(col, value=0)
 
+    # Convert to DataFrame
     input_df = pd.DataFrame([input_dict])
 
     # Encode categoricals
@@ -134,7 +142,7 @@ elif selected == "Predictor":
         prob = model.predict_proba(input_df_scaled)[0][int(pred)]
         status = 'Unemployed' if pred == 1 else 'Employed'
         st.success(f"Prediction: *{status}*")
-        st.info(f"Confidence: *{prob * 100:.2f}%*")
+        st.write(f"Confidence: *{prob * 100:.2f}%*")
 
 # ------------------------------------------------
 # ABOUT TAB
@@ -142,9 +150,10 @@ elif selected == "Predictor":
 elif selected == "About":
     st.title("ℹ About This App")
     st.markdown("""
-        This app predicts whether a person is employed or unemployed based on various demographic and academic factors.
+        This Streamlit app predicts whether an individual is likely to be employed or unemployed
+        based on socio-economic and educational inputs.
 
-        - **Built by:** Group Five Team  
-        - **Model Used:** Logistic Regression  
-        - **Technologies:** Python, Streamlit, Scikit-learn  
-    """)
+        *Built by:* Group Five Team  
+        *Model:* Logistic Regression  
+        *Tools:* Python, Streamlit, Scikit-learn
+    """)
