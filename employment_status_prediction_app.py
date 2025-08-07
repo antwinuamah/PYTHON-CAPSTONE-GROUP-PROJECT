@@ -15,34 +15,49 @@ st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 # ------------------------------------------------
 st.markdown("""
     <style>
+        /* Sidebar background */
         [data-testid="stSidebar"] {
-            background-color: #A9CBB7 !important; /* Light shade of dark green */
+            background-color: #A9CBB7 !important;
         }
+
+        /* Main app background */
         html, body, [data-testid="stAppViewContainer"] > .main {
-            background-color: #F4FBF6 !important; /* Light background for main view */
+            background-color: #F4FBF6 !important;
             color: black !important;
         }
+
+        /* Selectbox styling */
         .stSelectbox > div,
         .stSelectbox div[data-baseweb="select"] > div {
             background-color: #A9CBB7 !important;
             border-radius: 8px;
         }
+
+        /* Number input styling */
         input[type="number"] {
             background-color: #E3E7F7 !important;
             border-radius: 8px;
             padding: 0.4rem;
         }
+
+        /* Slider bar - filled portion */
         div[data-baseweb="slider"] > div > div > div:nth-child(2) {
-            background: #4B0082 !important;
+            background: #007847 !important;
         }
+
+        /* Slider bar - remaining portion */
         div[data-baseweb="slider"] > div > div > div:nth-child(3) {
             background: #e6e6e6 !important;
         }
+
+        /* Slider knob */
         div[data-baseweb="slider"] [role="slider"] {
-            background-color: #4B0082 !important;
+            background-color: #007847 !important;
         }
+
+        /* Button styling */
         div.stButton > button {
-            background-color: #4B0082 !important;
+            background-color: #007847 !important;
             color: white !important;
             border-radius: 8px !important;
             height: 3em;
@@ -50,11 +65,14 @@ st.markdown("""
             padding: 0.6rem 1.5rem;
             border: none;
         }
+
+        /* Button hover styling */
         div.stButton > button:hover {
-            background-color: #3a006b !important;
+            background-color: #005F3D !important;
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 
 # ------------------------------------------------
@@ -76,17 +94,17 @@ with st.sidebar:
         orientation="vertical",
         styles={
             "container": {"padding": "0!important", "background-color": "#E6E6E6"},
-            "icon": {"color": "black", "font-size": "20px"},  # <-- changed to black
+            "icon": {"color": "black", "font-size": "20px"},
             "nav-link": {
                 "font-size": "16px",
                 "text-align": "left",
                 "margin": "0px",
                 "--hover-color": "#007847",
-                "color": "#007847"
+                "color": "black"
             },
             "nav-link-selected": {
-                "background-color": "#007847",
-                "color": "#000000"
+                "background-color": "#006B44",
+                "color": "white"
             },
         },
     )
