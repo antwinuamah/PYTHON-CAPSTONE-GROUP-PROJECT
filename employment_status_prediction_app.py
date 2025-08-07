@@ -16,7 +16,7 @@ st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            background-color: #E3E7F7 !important;
+            background-color: #3AB785 !important;
         }
         html, body, [data-testid="stAppViewContainer"] > .main {
             background-color: white !important;
@@ -24,7 +24,7 @@ st.markdown("""
         }
         .stSelectbox > div,
         .stSelectbox div[data-baseweb="select"] > div {
-            background-color: #007847 !important;
+            background-color: #3AB785 !important;
             border-radius: 8px;
         }
         input[type="number"] {
