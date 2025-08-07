@@ -42,7 +42,7 @@ st.markdown("""
 
         /* Slider bar - filled portion */
         div[data-baseweb="slider"] > div > div > div:nth-child(2) {
-            background: #007847 !important;
+            background: #007847 !important; /* Replaced purple */
         }
 
         /* Slider bar - remaining portion */
@@ -52,12 +52,12 @@ st.markdown("""
 
         /* Slider knob */
         div[data-baseweb="slider"] [role="slider"] {
-            background-color: #007847 !important;
+            background-color: #007847 !important; /* Replaced purple */
         }
 
         /* Button styling */
         div.stButton > button {
-            background-color: #007847 !important;
+            background-color: #007847 !important; /* Replaced purple */
             color: white !important;
             border-radius: 8px !important;
             height: 3em;
@@ -68,11 +68,15 @@ st.markdown("""
 
         /* Button hover styling */
         div.stButton > button:hover {
-            background-color: #005F3D !important;
+            background-color: #005F3D !important; /* Replaced purple */
+        }
+
+        /* Title and headers */
+        h1, h2, h3, h4 {
+            color: #006B44 !important;
         }
     </style>
 """, unsafe_allow_html=True)
-
 
 
 # ------------------------------------------------
