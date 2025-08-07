@@ -84,7 +84,7 @@ with st.sidebar:
                 "color": "#333333"
             },
             "nav-link-selected": {
-                "background-color": "#C2C7EA",
+                "background-color": "#007847",
                 "color": "#000000"
             },
         },
