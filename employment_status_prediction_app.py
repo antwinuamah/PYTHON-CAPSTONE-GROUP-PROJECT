@@ -16,15 +16,15 @@ st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 st.markdown("""
     <style>
         [data-testid="stSidebar"] {
-            background-color: #3AB785 !important;
+            background-color: #A9CBB7 !important; /* Light shade of dark green */
         }
         html, body, [data-testid="stAppViewContainer"] > .main {
-            background-color: white !important;
+            background-color: #F4FBF6 !important; /* Light background for main view */
             color: black !important;
         }
         .stSelectbox > div,
         .stSelectbox div[data-baseweb="select"] > div {
-            background-color: #3AB785 !important;
+            background-color: #A9CBB7 !important;
             border-radius: 8px;
         }
         input[type="number"] {
@@ -56,6 +56,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
 # ------------------------------------------------
 # MODEL LOADING
 # ------------------------------------------------
@@ -75,7 +76,7 @@ with st.sidebar:
         orientation="vertical",
         styles={
             "container": {"padding": "0!important", "background-color": "#E6E6E6"},
-            "icon": {"color": "#000000", "font-size": "20px"},
+            "icon": {"color": "black", "font-size": "20px"},  # <-- changed to black
             "nav-link": {
                 "font-size": "16px",
                 "text-align": "left",
@@ -89,6 +90,7 @@ with st.sidebar:
             },
         },
     )
+
 
 # ------------------------------------------------
 # HOME TAB
