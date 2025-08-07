@@ -75,13 +75,13 @@ with st.sidebar:
         orientation="vertical",
         styles={
             "container": {"padding": "0!important", "background-color": "#007847"},
-            "icon": {"color": "#007847", "font-size": "20px"},
+            "icon": {"color": "#000000", "font-size": "20px"},
             "nav-link": {
                 "font-size": "16px",
                 "text-align": "left",
                 "margin": "0px",
                 "--hover-color": "#007847",
-                "color": "#333333"
+                "color": "#007847"
             },
             "nav-link-selected": {
                 "background-color": "#007847",
