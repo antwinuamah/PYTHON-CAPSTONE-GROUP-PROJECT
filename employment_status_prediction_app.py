@@ -79,6 +79,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+
 # ------------------------------------------------
 # MODEL LOADING
 # ------------------------------------------------
@@ -114,6 +115,7 @@ with st.sidebar:
     )
 
 
+
 # ------------------------------------------------
 # HOME TAB
 # ------------------------------------------------
@@ -135,11 +137,11 @@ elif selected == "Predictor":
             input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
         elif col in ['Round']:
             input_dict[col] = st.selectbox(col, ['1','2','3','4'])
-        elif col == 'Sa_citizen':
+        elif col == 'South African Citizen':
             input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
         elif col == 'Gender':
             input_dict[col] = st.selectbox("Gender", ['Female', 'Male'])
-        elif col == 'Highest_Education':
+        elif col == 'Highest Education':
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
         elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography']:
             input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
