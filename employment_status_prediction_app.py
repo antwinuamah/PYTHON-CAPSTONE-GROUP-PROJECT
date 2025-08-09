@@ -131,26 +131,45 @@ elif selected == "Predictor":
     st.write("Fill in the details below to predict employment status.")
 
     # Dynamic input form based on training columns
-    input_dict = {}
-    for col in X_columns:
-        if col in ['Matric', 'Degree', 'Diploma']:
-            input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
-        elif col in ['Round']:
-            input_dict[col] = st.selectbox(col, ['1','2','3','4'])
-        elif col == 'South African Citizen':
-            input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
-        elif col == 'Gender':
-            input_dict[col] = st.selectbox("Gender", ['Female', 'Male'])
-        elif col == 'Highest Education':
-            input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
-        elif col in ['Math', 'Mathlit', 'Additional Language', 'Home Language', 'Science', 'Geography']:
-            input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
-        elif col in ['Province']:
-            input_dict[col] = st.selectbox(col, ['Gauteng' , 'Mpumalanga' , 'North West', 'Free State', 'Eastern Cape', 'Limpopo','KwaZulu-Natal','Northern Cape','Western Cape'])
-        elif col in ['Status']:
-            input_dict[col] = st.selectbox(col, ['Unemployed', 'Studying','Wage employed','Self employed','Wage and self employed','Employment program','Other'])
-        else:
-            input_dict[col] = st.number_input(col, value=0)
+   input_dict = {}
+
+for col in X_columns:
+    if col in ['Matric', 'Degree', 'Diploma']:
+        options = ['Yes', 'No']
+    
+    elif col == 'Round':
+        options = ['1', '2', '3', '4']
+    
+    elif col == 'South African Citizen':
+        options = ['Citizen', 'Non-citizen']
+    
+    elif col == 'Gender':
+        options = ['Female', 'Male']
+    
+    elif col == 'Highest Education':
+        options = ['Degree', 'Diploma', 'Matric', 'None']
+    
+    elif col in ['Math', 'Mathlit', 'Additional Language', 'Home Language', 'Science', 'Geography']:
+        options = ['0% - 49%', '50% - 79%', '80% - 100%']
+    
+    elif col == 'Province':
+        options = [
+            'Gauteng', 'Mpumalanga', 'North West', 'Free State', 'Eastern Cape',
+            'Limpopo', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'
+        ]
+    
+    elif col == 'Status':
+        options = [
+            'Unemployed', 'Studying', 'Wage employed', 'Self employed',
+            'Wage and self employed', 'Employment program', 'Other'
+        ]
+    
+    else:
+        # Fallback to a general dropdown (change as needed)
+        options = ['Option 1', 'Option 2', 'Option 3']
+    
+    # Create the dropdown
+    input_dict[col] = st.selectbox(col, options)
 
     # Convert to DataFrame
     input_df = pd.DataFrame([input_dict])
