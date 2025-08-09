@@ -143,7 +143,7 @@ elif selected == "Predictor":
             input_dict[col] = st.selectbox("Gender", ['Female', 'Male'])
         elif col == 'Highest Education':
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
-        elif col in ['Math', 'Mathlit', 'Additional_lang', 'Home_lang', 'Science', 'Geography']:
+        elif col in ['Math', 'Mathlit', 'Additional Language', 'Home Language', 'Science', 'Geography']:
             input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
         elif col in ['Province']:
             input_dict[col] = st.selectbox(col, ['Gauteng' , 'Mpumalanga' , 'North West', 'Free State', 'Eastern Cape', 'Limpopo','KwaZulu-Natal','Northern Cape','Western Cape'])
