@@ -131,7 +131,7 @@ elif selected == "Predictor":
     st.write("Fill in the details below to predict employment status.")
 
     # Dynamic input form based on training columns
-   input_dict = {}
+  input_dict = {}
 
 for col in X_columns:
     if col in ['Matric', 'Degree', 'Diploma']:
@@ -167,6 +167,7 @@ for col in X_columns:
     else:
         # Fallback to a general dropdown (change as needed)
         options = ['Option 1', 'Option 2', 'Option 3']
+
     
     # Create the dropdown
     input_dict[col] = st.selectbox(col, options)
