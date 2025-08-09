@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import joblib
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 from streamlit_option_menu import option_menu
 
 # ------------------------------------------------
@@ -15,70 +14,48 @@ st.set_page_config(page_title="Employment Status Predictor", layout="wide")
 # ------------------------------------------------
 st.markdown("""
     <style>
-        /* Sidebar background */
         [data-testid="stSidebar"] {
             background-color: #A9CBB7 !important;
         }
-
-        /* Main app background */
         html, body, [data-testid="stAppViewContainer"] > .main {
             background-color: #F4FBF6 !important;
             color: black !important;
         }
-
-        /* Selectbox styling */
         .stSelectbox > div,
         .stSelectbox div[data-baseweb="select"] > div {
             background-color: #A9CBB7 !important;
             border-radius: 8px;
         }
-
-        /* Number input styling */
         input[type="number"] {
             background-color: #E3E7F7 !important;
             border-radius: 8px;
             padding: 0.4rem;
         }
-
-        /* Slider bar - filled portion */
         div[data-baseweb="slider"] > div > div > div:nth-child(2) {
-            background: #007847 !important; /* Replaced purple */
+            background: #007847 !important;
         }
-
-        /* Slider bar - remaining portion */
         div[data-baseweb="slider"] > div > div > div:nth-child(3) {
             background: #e6e6e6 !important;
         }
-
-        /* Slider knob */
         div[data-baseweb="slider"] [role="slider"] {
-            background-color: #007847 !important; /* Replaced purple */
+            background-color: #007847 !important;
         }
-
-        /* Button styling */
         div.stButton > button {
-            background-color: #007847 !important; /* Replaced purple */
+            background-color: #007847 !important;
             color: white !important;
             border-radius: 8px !important;
             height: 3em;
-            width: auto;
             padding: 0.6rem 1.5rem;
             border: none;
         }
-
-        /* Button hover styling */
         div.stButton > button:hover {
-            background-color: #005F3D !important; /* Replaced purple */
+            background-color: #005F3D !important;
         }
-
-        /* Title and headers */
         h1, h2, h3, h4 {
             color: #006B44 !important;
         }
     </style>
 """, unsafe_allow_html=True)
-
-
 
 # ------------------------------------------------
 # MODEL LOADING
@@ -114,8 +91,6 @@ with st.sidebar:
         },
     )
 
-
-
 # ------------------------------------------------
 # HOME TAB
 # ------------------------------------------------
@@ -130,12 +105,13 @@ elif selected == "Predictor":
     st.title("🤖 Employment Status Prediction")
     st.write("Fill in the details below to predict employment status.")
 
-   input_dict = {}
+    input_dict = {}
+
     for col in X_columns:
         if col in ['Matric', 'Degree', 'Diploma']:
             input_dict[col] = st.selectbox(f"{col} (Yes/No)", ['Yes', 'No'])
-        elif col in ['Round']:
-            input_dict[col] = st.selectbox(col, ['1','2','3','4'])
+        elif col == 'Round':
+            input_dict[col] = st.selectbox(col, ['1', '2', '3', '4'])
         elif col == 'South African Citizen':
             input_dict[col] = st.selectbox("Are you a SA Citizen?", ['Citizen', 'Non-citizen'])
         elif col == 'Gender':
@@ -143,27 +119,28 @@ elif selected == "Predictor":
         elif col == 'Highest Education':
             input_dict[col] = st.selectbox("Highest Education", ['Degree', 'Diploma', 'Matric', 'None'])
         elif col in ['Math', 'Mathlit', 'Additional Language', 'Home Language', 'Science', 'Geography']:
-            input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%','80% - 100%'])
-        elif col in ['Province']:
-            input_dict[col] = st.selectbox(col, ['Gauteng' , 'Mpumalanga' , 'North West', 'Free State', 'Eastern Cape', 'Limpopo','KwaZulu-Natal','Northern Cape','Western Cape'])
-        elif col in ['Status']:
-            input_dict[col] = st.selectbox(col, ['Unemployed', 'Studying','Wage employed','Self employed','Wage and self employed','Employment program','Other'])
+            input_dict[col] = st.selectbox(col, ['0% - 49%', '50% - 79%', '80% - 100%'])
+        elif col == 'Province':
+            input_dict[col] = st.selectbox(col, [
+                'Gauteng', 'Mpumalanga', 'North West', 'Free State', 'Eastern Cape',
+                'Limpopo', 'KwaZulu-Natal', 'Northern Cape', 'Western Cape'
+            ])
+        elif col == 'Status':
+            input_dict[col] = st.selectbox(col, [
+                'Unemployed', 'Studying', 'Wage employed', 'Self employed',
+                'Wage and self employed', 'Employment program', 'Other'
+            ])
         else:
             input_dict[col] = st.number_input(col, value=0)
 
-    
-    # Create the dropdown
-    input_dict[col] = st.selectbox(col, options)
-
-    # Convert to DataFrame
     input_df = pd.DataFrame([input_dict])
 
     # Encode categoricals
     for col in input_df.select_dtypes(include='object').columns:
         le = LabelEncoder()
-        input_df[col] = le.fit(input_df[col]).transform(input_df[col])
+        input_df[col] = le.fit_transform(input_df[col])
 
-    # Scale numeric
+    # Scale numeric features
     input_df_scaled = scaler.transform(input_df)
 
     if st.button("Predict Employment Status"):
@@ -182,7 +159,7 @@ elif selected == "About":
         This Streamlit app predicts whether an individual is likely to be employed or unemployed
         based on socio-economic and educational inputs.
 
-        *Built by:* Group Five Team  
-        *Model:* Logistic Regression  
-        *Tools:* Python, Streamlit, Scikit-learn
-    """)
+        **Built by:** Group Five Team  
+        **Model:** Logistic Regression  
+        **Tools:** Python, Streamlit, Scikit-learn
+    """)
