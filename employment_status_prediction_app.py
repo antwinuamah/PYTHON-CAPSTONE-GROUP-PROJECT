@@ -74,22 +74,21 @@ with st.sidebar:
         default_index=1,
         orientation="vertical",
         styles={
-            "container": {"padding": "0!important", "background-color": "#E6E6E6"},
-            "icon": {"color": "black", "font-size": "20px"},
+            "container": {"padding": "0!important", "background-color": "#E3E7F7"},
+            "icon": {"color": "#4B0082", "font-size": "20px"},
             "nav-link": {
                 "font-size": "16px",
                 "text-align": "left",
                 "margin": "0px",
-                "--hover-color": "#007847",
-                "color": "black"
+                "--hover-color": "#D5D9F0",
+                "color": "#333333"
             },
             "nav-link-selected": {
-                "background-color": "#006B44",
-                "color": "white"
+                "background-color": "#C2C7EA",
+                "color": "#000000"
             },
         },
     )
-
 
 # ------------------------------------------------
 # HOME TAB
